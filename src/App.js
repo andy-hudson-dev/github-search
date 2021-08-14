@@ -1,23 +1,51 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from "react";
+
+import Search from "./components/search";
+import Results, { Result } from "./components/results";
+import search from "./api/search";
 import './App.css';
 
-function App() {
+const DEFAULT_RECORDS_PER_PAGE = 20;
+
+const App = () => {
+
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState(null);
+
+  useEffect(() => {
+    async function searchApi() {
+      const data = await search(query, {
+          pageSize: DEFAULT_RECORDS_PER_PAGE,
+      });
+
+      setResults(data);
+    }
+
+    if (query) {
+      searchApi();
+    }
+  }, [query])
+
+  const renderResults = () => {
+    if(!results) {
+      return null;
+    }
+    
+    return (
+      <Results>
+        {results.items.map( result => <Result id={result.id} key={result.id} />)}
+      </Results>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="">
+      <header className="">
+        <Search labelText="Search Github Users" placeHolderText="Enter search term" buttonText="Search" onSubmit={query => setQuery(query)} />
       </header>
+      <main>
+        {renderResults()}
+      </main>
     </div>
   );
 }
