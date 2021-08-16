@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { ThemeProvider } from "styled-components";
 
+import GlobalStyle from "./GlobalStyle";
 import Search from "./components/search";
 import Results, { Result } from "./components/results";
 import search from "./api/search";
-import './App.css';
+import { defaultTheme } from "./theme";
 
 const DEFAULT_RECORDS_PER_PAGE = 20;
 
@@ -39,14 +41,16 @@ const App = () => {
   }
 
   return (
-    <div className="">
-      <header className="">
-        <Search labelText="Search Github Users" placeHolderText="Enter search term" buttonText="Search" onSubmit={query => setQuery(query)} />
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyle />
+      <header>
+        <h1>Github User Search</h1>        
       </header>
       <main>
+        <Search labelText="Search Users" placeHolderText="Enter search term" buttonText="Search" onSubmit={query => setQuery(query)} />
         {renderResults()}
       </main>
-    </div>
+      </ThemeProvider>
   );
 }
 
