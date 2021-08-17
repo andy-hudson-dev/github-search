@@ -21,15 +21,31 @@ const Result = ({ id }) =>  {
         return null;
     }
 
-    const { avatar_url, login, html_url, name, followers, company, bio } = userData;
+    const renderDetails = () => {
+
+    const { company, bio } = userData;
+        return(
+            <div class="result__main--details">
+                {company && company !="null" ? <span>{company}</span> : null}
+                {bio && bio !="null" ? <span>{bio}</span> : null}
+            </div>
+        );
+    }
+
+    const { avatar_url, login, html_url, name } = userData;
     return (    
         <li>
-            <div>
-                <img src={avatar_url} alt={name} />
-                <a href={html_url}>{login}</a>
-                <p>{name}</p>
-                <p>{`${company} ${bio}`}</p>
-                <p>{`${followers} Followers`}</p>
+            <div class="result">
+                <div class="result__avatar">
+                    <img src={avatar_url} alt={name} />
+                </div>
+                <div class="result__main">
+                    <div class="result__main--header">
+                        <a href={html_url}>{login}</a>
+                        <p>{name}</p>
+                    </div>
+                    {renderDetails()}
+                </div>                
             </div>
         </li>
     )
