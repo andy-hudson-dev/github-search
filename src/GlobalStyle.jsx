@@ -31,13 +31,17 @@ const GlobalStyle = createGlobalStyle`
     }
 
     button {
-        border: none;
+        border: .1rem solid ${(props) => props.theme.primaryBg};
         background-color: ${(props) => props.theme.primaryBg};
         color: ${(props) => props.theme.primaryText};
         cursor: pointer;
         padding: 9px 15px;
         border-radius: 4px;
         margin-left: 1rem;
+
+        :focus {
+            border: #1378c7 solid .1rem;
+        }
     }
 
     input[type="text"] {

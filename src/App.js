@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./GlobalStyle";
 import Search from "./components/search";
 import Results, { Result } from "./components/results";
+import Pagination from "./components/pagination";
 import search from "./api/search";
 import { defaultTheme } from "./theme";
 
@@ -13,11 +14,13 @@ const App = () => {
 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     async function searchApi() {
       const data = await search(query, {
           pageSize: DEFAULT_RECORDS_PER_PAGE,
+          page: currentPage,
       });
 
       setResults(data);
@@ -26,17 +29,22 @@ const App = () => {
     if (query) {
       searchApi();
     }
-  }, [query])
+  }, [query, currentPage])
 
   const renderResults = () => {
     if(!results) {
       return null;
     }
     
+    const totalPages = Math.round(results.total_count / DEFAULT_RECORDS_PER_PAGE);
+
     return (
-      <Results>
-        {results.items.map( result => <Result id={result.id} key={result.id} />)}
-      </Results>
+      <>
+      <Pagination totalPages={totalPages} currentPage={currentPage} pageChanged={page => setCurrentPage(page)}/>
+        <Results>
+          {results.items.map(result => <Result id={result.id} key={result.id} />)}
+        </Results>        
+      </>
     );
   }
 

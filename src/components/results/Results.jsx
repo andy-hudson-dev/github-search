@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import ResultsStyled from './Results.styled';
+import ResultsStyled from "./Results.styled";
 
 const Results = ({children}) =>  {
 
