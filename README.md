@@ -1,3 +1,27 @@
+# Approach
+ - Scaffold using Create React App
+ - Basic POC to explore the capabilities of the API
+ - TDD API calls
+ - Basic unstyled components to display the results
+ - Introduce Styled Components and begun styling (taking accessibility and colour contrast into account)
+ - TDD Pagination logic
+ - Style pagination
+
+# Issues faced
+1. Lots of time wasted initially due to create react act not working -> turned out to be an over-zealous anti virus program quarantining files as soon as they were created by create react app!
+2. Difficult to find focus time outside office hours due to clingy 2 month old baby
+3. Discovered late on (at pagination stage) there appears to be a limit on number of API calls over a given period. Would now need to refactor logic.
+
+# Potential Future development
+1. Further unit test coverage -> components. Logic mostly covered
+2. Refactor to better handle API 403 responses
+3. Refactor state handling in App.js to use a useReducer and make code cleaner and more readable
+4. Wanted to add a "Change View" funtion to toggle between rows and tiles
+5. Allow user to choose number of records per page
+6. Implement ESLint rules and prettier
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
