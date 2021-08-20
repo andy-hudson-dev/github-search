@@ -42,12 +42,12 @@ const Result = ({ id }) =>  {
     }
 
     const { avatar_url, login, html_url, name } = userData;
-    
+
     return (    
         <li>
             <div className="result">
                 <div className="result__avatar">
-                    <img src={avatar_url} alt={name} />
+                    <img src={avatar_url} alt={`${name} avatar`} />
                 </div>
                 <div className="result__main">
                     <div className="result__main--header">

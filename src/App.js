@@ -54,7 +54,8 @@ const App = () => {
       <Pagination totalPages={totalPages} currentPage={currentPage} pageChanged={page => setCurrentPage(page)}/>
         <Results>
           {results.items.map(result => <Result id={result.id} key={result.id} />)}
-        </Results>        
+        </Results>
+        <p>Showing {DEFAULT_RECORDS_PER_PAGE} users of {results.total_count}</p>        
       </>
     );
   }
