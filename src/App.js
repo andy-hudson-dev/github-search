@@ -8,22 +8,28 @@ import Pagination from "./components/pagination";
 import search from "./api/search";
 import { defaultTheme } from "./theme";
 
-const DEFAULT_RECORDS_PER_PAGE = 20;
+const DEFAULT_RECORDS_PER_PAGE = 10;
 
 const App = () => {
 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function searchApi() {
-      const data = await search(query, {
-          pageSize: DEFAULT_RECORDS_PER_PAGE,
-          page: currentPage,
-      });
+      try {
+        const data = await search(query, {
+            pageSize: DEFAULT_RECORDS_PER_PAGE,
+            page: currentPage,
+        });
 
-      setResults(data);
+        setResults(data);
+      }
+      catch (e) {
+        setError(e.message);
+      }
     }
 
     if (query) {
@@ -32,6 +38,11 @@ const App = () => {
   }, [query, currentPage])
 
   const renderResults = () => {
+
+    if(error) {
+      return <p>{error}</p>
+    }
+
     if(!results) {
       return null;
     }

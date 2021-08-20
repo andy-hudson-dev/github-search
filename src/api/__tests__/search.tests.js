@@ -77,6 +77,23 @@ describe("search", () => {
         }
     });
 
+    it("should throw if request limit is reached", async () => {
+        global.fetch.mockImplementation(() =>
+            Promise.resolve({
+                status: 403,
+            }),
+        );
+
+        try {
+            await search(MOCK_QUERY);
+        } catch (error) {
+
+            expect(error.message).toBe(
+                "Request limit reached, please try later.",
+            );
+        }
+    });
+
     it("should throw if api returns unsuccessful", async () => {
         global.fetch.mockImplementation(() =>
             Promise.resolve({

@@ -10,6 +10,12 @@ async function search(
         `https://api.github.com/search/${type}?q=${query}&per_page=${recordsPerPage}&page=${page}`,
     );
 
+    if (response.status === 403) {
+        throw new Error(
+            "Request limit reached, please try later.",
+        );
+    }
+
     if (!response.json) {
         throw new Error(
             "An unknown error has occurred",

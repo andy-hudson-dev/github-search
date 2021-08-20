@@ -6,24 +6,33 @@ import getUser from "../../api/getUser";
 const Result = ({ id }) =>  {
 
     const [userData, setUserData] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function getData() {
-            const data = await getUser(id);
-      
-            setUserData(data);
-          }
+            try {
+                const data = await getUser(id);
+        
+                setUserData(data);
+            }
+            catch (e) {
+                setError(e.message);
+            }
+        }
 
-          getData();
-    }, [id]);
-
+        getData();
+    }, [id]); 
+    
+    if(error) {
+        return <p>{error}</p>
+    }
     if (!userData) {
         return null;
     }
 
     const renderDetails = () => {
 
-    const { company, bio } = userData;
+        const { company, bio } = userData;
         return(
             <div className="result__main--details">
                 {company && company !=="null" ? <span>{company}</span> : null}
@@ -33,6 +42,7 @@ const Result = ({ id }) =>  {
     }
 
     const { avatar_url, login, html_url, name } = userData;
+    
     return (    
         <li>
             <div className="result">

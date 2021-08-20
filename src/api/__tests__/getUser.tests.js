@@ -26,6 +26,22 @@ describe("getUser", () => {
         }
     });
 
+    it("should throw if request limit is reached", async () => {
+        global.fetch.mockImplementation(() =>
+            Promise.resolve({
+                status: 403,
+            }),
+        );
+
+        try {
+            await getUser(999);
+        } catch (error) {
+            expect(error.message).toBe(
+                "Request limit reached, please try later.",
+            );
+        }
+    });
+
     it("should request the specified user", async () => {
         await getUser(999);
 
